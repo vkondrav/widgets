@@ -29,7 +29,6 @@
 	},
 	"dependencies": {
 		"@iconify/svelte": "^4.0.2",
-		"@sveltejs/adapter-static": "^3.0.6",
-		"wrangler": "^3.90.0"
+		"@sveltejs/adapter-static": "^3.0.6"
 	}
 }
