@@ -1,0 +1,253 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="TW Timer">
+  <main>
+    <div class="imageContainer">
+      <img
+        class="center"
+        src="/thoughtworks.png"
+        alt="Thoughtworks logo"
+        style="max-width: 50%;"
+      />
+    </div>
+
+    <div class="circle">
+      <div class="progress"></div>
+      <div class="outer"></div>
+      <h1 class="center">10:00</h1>
+      <!-- <svg class="playSVG">
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="white"
+          stroke-width="3"
+          fill="none"></circle>
+        <polygon points="40,30 70,50 40,70" fill="white"></polygon>
+      </svg>
+      <svg class="stopSVG">
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="white"
+          stroke-width="3"
+          fill="none"></circle>
+        <rect x="35" y="35" width="30" height="30" fill="white"></rect>
+      </svg> -->
+    </div>
+    <div class="buttonContainer">
+      <button class="startPauseButton" style="min-width: 6rem;">Start</button>
+      <button class="fiveButton">5</button>
+      <button class="sixButton">6</button>
+      <button class="tenButton">10</button>
+      <button class="fifteenButton">15</button>
+      <button class="twentyButton">20</button>
+      <button class="resetButton">Reset</button>
+    </div>
+    <audio id="audio" src="analog-timer.mp3"></audio>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    height: 100%;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  .imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+    animation: fadeIn 1s;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.99;
+    }
+  }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  .circle {
+    display: block;
+    margin: 5rem auto;
+    width: 400px;
+    height: 400px;
+    position: relative;
+    /* background-color: black; */
+  }
+
+  .outer {
+    height: 400px;
+    width: 400px;
+    border-radius: 50%;
+    position: absolute;
+    /* border: 1px solid #f4647c; */
+    box-shadow:
+      6px 6px 10px -1px rgba(0, 0, 0, 0.35),
+      -6px -6px 10px -1px rgba(255, 255, 255, 0.35);
+  }
+  /* .inner {
+    height: 420px;
+    width: 420px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 20px;
+    box-shadow:
+      4px 4px 6px -1px rgba(0, 0, 0, 0.2),
+      inset -1px -1px 6px -1px rgba(255, 255, 255, 0.1),
+      -0.5px -0.5px 0px rgba(255, 255, 255, 0.5),
+      0.5px 0.5px 0px rgba(0, 0, 0, 0.05),
+      0px 1px 1px -10px rgba(0, 0, 0, 0.01);
+
+    padding: 20px;
+  } */
+  .progress {
+    fill: none;
+    stroke: #f4647c;
+    stroke-width: 20px;
+  }
+  .playSVG {
+    position: absolute;
+    top: 70%;
+    left: 40%;
+  }
+  .stopSVG {
+    position: absolute;
+    top: 70%;
+    left: 40%;
+  }
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  h1 {
+    font-family: "Verdana", monospace;
+    font-size: 7rem;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    padding-top: 70px;
+    position: absolute;
+  }
+</style>
+
+<script>
+  let timeRemaining = 600;
+  let lastTimeSelected = 600;
+  let minutes = 0;
+  let seconds = 0;
+  let isPaused = true;
+  let startPauseText = "Play";
+
+  const circleContainer = document.querySelector(".circle");
+  const timer = document.querySelector("h1");
+  const startPauseButton = document.querySelector(".startPauseButton");
+  const fiveButton = document.querySelector(".fiveButton");
+  const sixButton = document.querySelector(".sixButton");
+  const tenButton = document.querySelector(".tenButton");
+  const fifteenButton = document.querySelector(".fifteenButton");
+  const twentyButton = document.querySelector(".twentyButton");
+  const resetButton = document.querySelector(".resetButton");
+  const audio = document.getElementById("audio") as HTMLAudioElement;
+
+  const calculateTime = () => {
+    minutes = Math.floor((timeRemaining / 60) % 60);
+    seconds = Math.floor(timeRemaining % 60);
+  };
+
+  const getMinutesText = () => {
+    return minutes.toString().padStart(2, "0");
+  };
+
+  const getSecondsText = () => {
+    return seconds.toString().padStart(2, "0");
+  };
+
+  const setPlayPauseText = () => {
+    startPauseText = isPaused ? "Start" : "Pause";
+    if (startPauseButton) {
+      startPauseButton.textContent = startPauseText;
+    }
+  };
+
+  const toggleTimerRunning = () => {
+    isPaused = !isPaused;
+    if (isPaused) {
+      audio?.pause();
+    } else if (audio?.currentTime !== 0) {
+      audio?.play();
+    }
+    setPlayPauseText();
+  };
+  startPauseButton?.addEventListener("click", toggleTimerRunning);
+  circleContainer?.addEventListener("click", toggleTimerRunning);
+
+  fiveButton?.addEventListener("click", () => {
+    setTimeText(20);
+  });
+  sixButton?.addEventListener("click", () => {
+    setTimeText(360);
+  });
+  tenButton?.addEventListener("click", () => {
+    setTimeText(600);
+  });
+  fifteenButton?.addEventListener("click", () => {
+    setTimeText(900);
+  });
+  twentyButton?.addEventListener("click", () => {
+    setTimeText(1200);
+  });
+
+  resetButton?.addEventListener("click", () => {
+    setTimeText(lastTimeSelected);
+  });
+
+  const setTimeText = (newTime: number) => {
+    isPaused = true;
+    lastTimeSelected = newTime;
+    timeRemaining = newTime;
+
+    setPlayPauseText();
+    resetAudio();
+    calculateTime();
+    if (timer) {
+      timer.innerText = `${getMinutesText()}:${getSecondsText()}`;
+    }
+  };
+
+  const resetAudio = () => {
+    audio?.pause();
+    if (audio) {
+      audio.currentTime = 0;
+    }
+  };
+
+  setInterval(() => {
+    if (timer && !isPaused && timeRemaining > 0) {
+      timeRemaining--;
+      calculateTime();
+      timer.innerText = `${getMinutesText()}:${getSecondsText()}`;
+    }
+    if (timeRemaining === 14) {
+      audio?.play();
+    }
+  }, 1000);
+</script>
