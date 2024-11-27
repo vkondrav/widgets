@@ -38,8 +38,9 @@
         total_seconds = 0
     }
 
-    function addTime(time: number) {
-        total_seconds = Math.min(total_seconds + time, 60 * 60);
+    function addTime(seconds: number) {
+        let max_seconds = 60 * 60
+        total_seconds = Math.min(total_seconds + seconds, max_seconds);
     }
 
     $effect(() => {
@@ -72,7 +73,7 @@
     });
 </script>
 
-<div class="flex items-center justify-center min-h-screen flex-col">
+<div class="flex items-center justify-center min-h-screen flex-col -mt-8">
 
     <img src="/logo.png" class="w-2/3 mb-8" alt="">
 
