@@ -68,18 +68,19 @@ const config: Config = {
     daisyui: {
         themes: [
             {
-                mytheme: {
-                    "primary": "#a991f7",
-                    "secondary": "#f6d860",
-                    "accent": "#37cdbe",
-                    "neutral": "#3d4451",
-                    "base-100": "#ffffff",
+                custom_theme: {
+                    "primary": "#CC850A",
+                    "secondary": "#47A1AD",
+                    "accent": "#F2617A",
+                    "neutral": "#634F7D",
+                    "base-100": "#003D4F",
+                    "info": "#CC850A",
+                    "base-content": "#EDF1F3",
                 },
             },
             "light",
             "dark",
             "retro",
-            "business"
         ],
     },
 };

@@ -74,6 +74,8 @@
 
 <div class="flex items-center justify-center min-h-screen flex-col">
 
+    <img src="/logo.png" class="w-2/3 mb-8" alt="">
+
     <div class="flex space-x-4 mb-4">
         <button onclick="{() => addTime(60)}" class="btn btn-outline">+1 min</button>
         <button onclick="{() => addTime(60 * 5)}" class="btn btn-outline btn-primary">+5 min</button>
