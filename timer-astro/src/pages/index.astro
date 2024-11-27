@@ -18,9 +18,9 @@ import Layout from "../layouts/Layout.astro";
       <div class="outer"></div>
 
       <span class="countdown font-mono text-2xl" style=" font-family: Verdana">
-        <span id="minutes" style="--value:10;"></span>
-        :
-        <span id="seconds" style="--value:00;"></span>
+        <span id="minutes" style="--value:10;"></span>:<span
+          id="seconds"
+          style="--value:00;"></span>
       </span>
 
       <!-- <svg class="playSVG">
@@ -117,6 +117,16 @@ import Layout from "../layouts/Layout.astro";
     box-shadow:
       6px 6px 10px -1px rgba(0, 0, 0, 0.35),
       -6px -6px 10px -1px rgba(255, 255, 255, 0.35);
+  }
+  .outer:active {
+    height: 400px;
+    width: 400px;
+    border-radius: 50%;
+    position: absolute;
+    /* border: 1px solid #f4647c; */
+    box-shadow:
+      inset 6px 6px 10px -1px rgba(0, 0, 0, 0.35),
+      inset -6px -6px 10px -1px rgba(255, 255, 255, 0.09);
   }
   /* .inner {
     height: 420px;
