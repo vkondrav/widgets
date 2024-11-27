@@ -9,6 +9,7 @@
     let minutes = $derived(Math.floor(total_seconds / 60))
 
     let interval: NodeJS.Timeout
+    let audio: HTMLAudioElement
 
     function start() {
 
@@ -16,11 +17,14 @@
             return
         }
 
+        audio.load()
+
         total_seconds -= 1
 
         interval = setInterval(() => {
 
             if (total_seconds === 0) {
+                audio.play()
                 clearInterval(interval)
             } else {
                 total_seconds -= 1
@@ -31,10 +35,12 @@
 
     function pause() {
         clearInterval(interval)
+        audio.pause()
     }
 
     function stop() {
         clearInterval(interval)
+        audio.pause()
         total_seconds = 0
     }
 
@@ -72,6 +78,8 @@
 
     });
 </script>
+
+<audio src="https://cdn.freesound.org/previews/250/250629_4486188-lq.mp3" bind:this={audio} ></audio>
 
 <div class="flex items-center justify-center min-h-screen flex-col -mt-8">
 
