@@ -13,10 +13,16 @@ import Layout from "../layouts/Layout.astro";
       />
     </div>
 
-    <div class="circle">
-      <div class="progress"></div>
+    <div class="timer">
+      <!-- <div class="progress"></div> -->
       <div class="outer"></div>
-      <h1 class="center">10:00</h1>
+
+      <span class="countdown font-mono text-2xl" style=" font-family: Verdana">
+        <span id="minutes" style="--value:10;"></span>
+        :
+        <span id="seconds" style="--value:00;"></span>
+      </span>
+
       <!-- <svg class="playSVG">
         <circle
           cx="50"
@@ -39,13 +45,16 @@ import Layout from "../layouts/Layout.astro";
       </svg> -->
     </div>
     <div class="buttonContainer">
-      <button class="startPauseButton" style="min-width: 6rem;">Start</button>
-      <button class="fiveButton">5</button>
-      <button class="sixButton">6</button>
-      <button class="tenButton">10</button>
-      <button class="fifteenButton">15</button>
-      <button class="twentyButton">20</button>
-      <button class="resetButton">Reset</button>
+      <button
+        class="btn btn-outline mx-1 startPauseButton"
+        style="min-width: 6rem;">Start</button
+      >
+      <button class="btn btn-outline mx-1 fiveButton">5</button>
+      <button class="btn btn-outline mx-1 sixButton">6</button>
+      <button class="btn btn-outline mx-1 tenButton">10</button>
+      <button class="btn btn-outline mx-1 fifteenButton">15</button>
+      <button class="btn btn-outline mx-1 twentyButton">20</button>
+      <button class="btn btn-outline mx-1 resetButton">Reset</button>
     </div>
     <audio id="audio" src="analog-timer.mp3"></audio>
   </main>
@@ -83,13 +92,20 @@ import Layout from "../layouts/Layout.astro";
     margin-right: auto;
     width: 100%;
   }
-  .circle {
-    display: block;
+  .timer {
     margin: 5rem auto;
     width: 400px;
     height: 400px;
     position: relative;
     /* background-color: black; */
+  }
+  .countdown {
+    font-family: "Verdana", monospace;
+    display: block;
+    font-size: 6rem;
+    line-height: 1;
+    text-align: center;
+    padding-top: 140px;
   }
 
   .outer {
@@ -144,7 +160,7 @@ import Layout from "../layouts/Layout.astro";
     font-weight: 500;
     line-height: 1;
     text-align: center;
-    padding-top: 70px;
+    padding-top: 140px;
     position: absolute;
   }
 </style>
@@ -158,7 +174,9 @@ import Layout from "../layouts/Layout.astro";
   let startPauseText = "Play";
 
   const circleContainer = document.querySelector(".circle");
-  const timer = document.querySelector("h1");
+  const timerMinutes = document.getElementById("minutes") as HTMLElement;
+  const timerSeconds = document.getElementById("seconds") as HTMLElement;
+
   const startPauseButton = document.querySelector(".startPauseButton");
   const fiveButton = document.querySelector(".fiveButton");
   const sixButton = document.querySelector(".sixButton");
@@ -201,7 +219,7 @@ import Layout from "../layouts/Layout.astro";
   circleContainer?.addEventListener("click", toggleTimerRunning);
 
   fiveButton?.addEventListener("click", () => {
-    setTimeText(20);
+    setTimeText(300);
   });
   sixButton?.addEventListener("click", () => {
     setTimeText(360);
@@ -228,9 +246,8 @@ import Layout from "../layouts/Layout.astro";
     setPlayPauseText();
     resetAudio();
     calculateTime();
-    if (timer) {
-      timer.innerText = `${getMinutesText()}:${getSecondsText()}`;
-    }
+    timerMinutes?.style.setProperty("--value", getMinutesText());
+    timerSeconds?.style.setProperty("--value", getSecondsText());
   };
 
   const resetAudio = () => {
@@ -241,10 +258,11 @@ import Layout from "../layouts/Layout.astro";
   };
 
   setInterval(() => {
-    if (timer && !isPaused && timeRemaining > 0) {
+    if (timerMinutes && timerSeconds && !isPaused && timeRemaining > 0) {
       timeRemaining--;
       calculateTime();
-      timer.innerText = `${getMinutesText()}:${getSecondsText()}`;
+      timerMinutes?.style.setProperty("--value", getMinutesText());
+      timerSeconds?.style.setProperty("--value", getSecondsText());
     }
     if (timeRemaining === 14) {
       audio?.play();
