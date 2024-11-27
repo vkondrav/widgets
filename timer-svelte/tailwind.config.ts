@@ -73,7 +73,7 @@ const config: Config = {
                     "secondary": "#47A1AD",
                     "accent": "#F2617A",
                     "neutral": "#634F7D",
-                    "base-100": "#003D4F",
+                    "base-100": "#01394D",
                     "info": "#CC850A",
                     "base-content": "#EDF1F3",
                 },
