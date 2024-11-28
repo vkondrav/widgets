@@ -47,16 +47,15 @@ import { Image } from "astro:assets";
       </svg> -->
     </div>
     <div class="buttonContainer">
-      <button
-        class="btn btn-outline mx-1 startPauseButton"
-        style="min-width: 6rem;">Start</button
+      <button class="btn btn-outline startPauseButton" style="min-width: 5rem;"
+        >Start</button
       >
       <button class="btn btn-outline mx-1 fiveButton">5</button>
-      <button class="btn btn-outline mx-1 sixButton">6</button>
+      <button class="btn btn-outline sixButton">6</button>
       <button class="btn btn-outline mx-1 tenButton">10</button>
-      <button class="btn btn-outline mx-1 fifteenButton">15</button>
+      <button class="btn btn-outline fifteenButton">15</button>
       <button class="btn btn-outline mx-1 twentyButton">20</button>
-      <button class="btn btn-outline mx-1 resetButton">Reset</button>
+      <button class="btn btn-outline resetButton">Reset</button>
     </div>
     <audio id="audio" src="analog-timer.mp3"></audio>
   </main>
@@ -158,6 +157,9 @@ import { Image } from "astro:assets";
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .btn {
+    min-width: 3.5rem;
   }
 </style>
 
