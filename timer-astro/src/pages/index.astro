@@ -13,7 +13,7 @@ import Layout from "../layouts/Layout.astro";
       />
     </div>
 
-    <div class="timer">
+    <div class="timerContainer">
       <!-- <div class="progress"></div> -->
       <div class="outer"></div>
 
@@ -22,8 +22,8 @@ import Layout from "../layouts/Layout.astro";
           id="seconds"
           style="--value:00;"></span>
       </span>
-
-      <!-- <svg class="playSVG">
+      <!-- 
+      <svg class="playSVG">
         <circle
           cx="50"
           cy="50"
@@ -92,21 +92,6 @@ import Layout from "../layouts/Layout.astro";
     margin-right: auto;
     width: 100%;
   }
-  .timer {
-    margin: 5rem auto;
-    width: 400px;
-    height: 400px;
-    position: relative;
-    /* background-color: black; */
-  }
-  .countdown {
-    font-family: "Verdana", monospace;
-    display: block;
-    font-size: 6rem;
-    line-height: 1;
-    text-align: center;
-    padding-top: 140px;
-  }
 
   .outer {
     height: 400px;
@@ -115,8 +100,8 @@ import Layout from "../layouts/Layout.astro";
     position: absolute;
     /* border: 1px solid #f4647c; */
     box-shadow:
-      6px 6px 10px -1px rgba(0, 0, 0, 0.35),
-      -6px -6px 10px -1px rgba(255, 255, 255, 0.35);
+      6px 6px 10px -1px rgba(0, 0, 0, 0.25),
+      -6px -6px 10px -1px rgba(255, 255, 255, 0.15);
   }
   .outer:active {
     height: 400px;
@@ -128,31 +113,32 @@ import Layout from "../layouts/Layout.astro";
       inset 6px 6px 10px -1px rgba(0, 0, 0, 0.35),
       inset -6px -6px 10px -1px rgba(255, 255, 255, 0.09);
   }
-  /* .inner {
-    height: 420px;
-    width: 420px;
-    border-radius: 50%;
-    position: absolute;
-    margin-top: 20px;
-    margin-left: 20px;
-    box-shadow:
-      4px 4px 6px -1px rgba(0, 0, 0, 0.2),
-      inset -1px -1px 6px -1px rgba(255, 255, 255, 0.1),
-      -0.5px -0.5px 0px rgba(255, 255, 255, 0.5),
-      0.5px 0.5px 0px rgba(0, 0, 0, 0.05),
-      0px 1px 1px -10px rgba(0, 0, 0, 0.01);
-
-    padding: 20px;
-  } */
+  .timerContainer {
+    margin: 5rem auto;
+    width: 400px;
+    height: 400px;
+    position: relative;
+  }
+  .countdown {
+    font-family: "Verdana", monospace;
+    display: flex;
+    font-size: 6rem;
+    line-height: 1;
+    justify-content: center;
+    padding-top: 140px;
+    pointer-events: none;
+  }
   .progress {
     fill: none;
     stroke: #f4647c;
     stroke-width: 20px;
+    pointer-events: none;
   }
   .playSVG {
     position: absolute;
     top: 70%;
     left: 40%;
+    pointer-events: none;
   }
   .stopSVG {
     position: absolute;
@@ -183,7 +169,7 @@ import Layout from "../layouts/Layout.astro";
   let isPaused = true;
   let startPauseText = "Play";
 
-  const circleContainer = document.querySelector(".timer");
+  const circleContainer = document.querySelector(".timerContainer");
   const timerMinutes = document.getElementById("minutes") as HTMLElement;
   const timerSeconds = document.getElementById("seconds") as HTMLElement;
 
