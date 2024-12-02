@@ -24,27 +24,28 @@ import { Image } from "astro:assets";
           id="seconds"
           style="--value:00;"></span>
       </span>
-      <!-- 
-      <svg class="playSVG">
+
+      <svg class="playSVG" width="75" height="75">
         <circle
-          cx="50"
-          cy="50"
-          r="45"
+          cx="37.5"
+          cy="37.5"
+          r="33.75"
           stroke="white"
-          stroke-width="3"
+          stroke-width="2.25"
           fill="none"></circle>
-        <polygon points="40,30 70,50 40,70" fill="white"></polygon>
+        <polygon points="30,22.5 52.5,37.5 30,52.5" fill="white"></polygon>
       </svg>
-      <svg class="stopSVG">
+      <svg class="stopSVG" width="75" height="75">
         <circle
-          cx="50"
-          cy="50"
-          r="45"
+          cx="37.5"
+          cy="37.5"
+          r="33.75"
           stroke="white"
-          stroke-width="3"
+          stroke-width="2.25"
           fill="none"></circle>
-        <rect x="35" y="35" width="30" height="30" fill="white"></rect>
-      </svg> -->
+        <rect x="26.25" y="26.25" width="22.5" height="22.5" fill="white"
+        ></rect>
+      </svg>
     </div>
     <div class="buttonContainer">
       <button class="btn btn-outline startPauseButton" style="min-width: 5rem;"
@@ -79,7 +80,6 @@ import { Image } from "astro:assets";
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 0rem;
     justify-content: center;
     justify-self: center;
     align-items: center;
@@ -146,13 +146,15 @@ import { Image } from "astro:assets";
   .playSVG {
     position: absolute;
     top: 70%;
-    left: 40%;
+    left: 41%;
     pointer-events: none;
   }
   .stopSVG {
+    display: none;
     position: absolute;
     top: 70%;
-    left: 40%;
+    left: 41%;
+    pointer-events: none;
   }
   .buttonContainer {
     margin: 3rem auto;
@@ -176,6 +178,9 @@ import { Image } from "astro:assets";
   const circleContainer = document.querySelector(".timerContainer");
   const timerMinutes = document.getElementById("minutes") as HTMLElement;
   const timerSeconds = document.getElementById("seconds") as HTMLElement;
+
+  const playSVG = document.querySelector(".playSVG") as HTMLElement;
+  const stopSVG = document.querySelector(".stopSVG") as HTMLElement;
 
   const startPauseButton = document.querySelector(".startPauseButton");
   const fiveButton = document.querySelector(".fiveButton");
@@ -208,6 +213,11 @@ import { Image } from "astro:assets";
 
   const toggleTimerRunning = () => {
     isPaused = !isPaused;
+    if (playSVG && stopSVG) {
+      playSVG.style.display = isPaused ? "block" : "none";
+      stopSVG.style.display = isPaused ? "none" : "block";
+    }
+
     if (isPaused) {
       audio?.pause();
     } else if (audio?.currentTime !== 0) {
